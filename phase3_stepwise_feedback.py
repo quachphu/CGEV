@@ -13,9 +13,9 @@ Output: stepwise_feedback-{model}/feedback/{PMID}_feedback.jsonl
 NO ground truth is passed to the critic — same blind-feedback constraint as SiriuS.
 
 Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python Actor_Critic_CGEV/get_stepwise_feedback.py \\
-    --model gpt-4.1-nano-2025-04-14 \\
-    --input_file .../ensemble_judgement-{model}/reject.jsonl
+  PYTHONPATH=. python phase3_stepwise_feedback.py \\
+    --model gpt-3.5-turbo-0125 \\
+    --input_file logs/.../ensemble_judgement-{model}/reject.jsonl
 """
 
 import os
@@ -26,7 +26,7 @@ from tqdm import tqdm
 
 from args import parse_args
 from libs.data_loader import load_jsonl_objects
-from Actor_Critic_CGEV.agent import Agent
+from agent import Agent
 from prompt_ensemble import stepwise_feedback_sys, stepwise_feedback_user
 from openai import OpenAI
 

@@ -14,8 +14,8 @@ Critical difference from original SiriuS:
   CGEV:   Only REJECT items      → Critic (ACCEPT + UNCERTAIN preserved, never corrupted)
 
 Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python Actor_Critic_CGEV/merge_cgev.py \\
-    --base_dir Actor_Critic_CGEV/logs/solve_PubMedQA_{model}/sol/ensemble_judgement-{model}
+  PYTHONPATH=. python merge_cgev.py \\
+    --base_dir logs/solve_PubMedQA_{model}/sol/ensemble_judgement-{model}
 """
 
 import argparse

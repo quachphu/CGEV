@@ -4,11 +4,11 @@ Merge per-item JSONL files in a directory into a single JSONL file.
 
 Usage examples (run from project root with PYTHONPATH=.):
 
-  # After get_a_sol.py — merge sol files for ensemble judgement input:
-  python Actor_Critic_CGEV/merge.py --dir Actor_Critic_CGEV/logs/solve_PubMedQA_gpt-4.1-nano-2025-04-14/sol
+  # After phase1 — merge sol files for ensemble judgement input:
+  python merge.py --dir logs/solve_PubMedQA_gpt-3.5-turbo-0125/sol
 
-  # After get_stepwise_feedback.py — merge feedback files for regenerate input:
-  python Actor_Critic_CGEV/merge.py --dir Actor_Critic_CGEV/logs/solve_PubMedQA_gpt-4.1-nano-2025-04-14/sol/ensemble_judgement-gpt-4.1-nano-2025-04-14/stepwise_feedback-gpt-4.1-nano-2025-04-14/feedback
+  # After phase3 — merge feedback files for regenerate input:
+  python merge.py --dir logs/solve_PubMedQA_gpt-3.5-turbo-0125/sol/ensemble_judgement-gpt-3.5-turbo-0125/stepwise_feedback-gpt-3.5-turbo-0125/feedback
 
 Output: <dir>/<dirname>.jsonl  (filename matches what the next script's path replace() expects)
   sol/       -> sol/sol.jsonl

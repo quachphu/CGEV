@@ -9,7 +9,7 @@ from args import parse_args
 from libs.data_loader import load_jsonl_objects, extract_answer_yesno, extract_response
 from libs.utils import compare_answer_with_groundtruth
 from prompt import *
-from Actor_Critic_CGEV.agent import actor_agent
+from agent import actor_agent
 
 DATA_BATCH_SIZE = 1
 

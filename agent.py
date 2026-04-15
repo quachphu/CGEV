@@ -91,26 +91,6 @@ class Agent:
 
         return fine_tuned_object
 
-    # def fine_tune(self, training_dataset_filename):
-    #     client = self.client
-
-    #     if isinstance(self.api_type, OpenAI):
-    #         file_object = client.files.create(
-    #             file=open(training_dataset_filename, "rb"), purpose="fine-tune"
-    #         )
-
-    #         file_id = file_object.id
-    #         print(f"File uploaded, ID: {file_id}")
-
-    #         # Wait for OpenAI's backend to process the file before starting the job.
-    #         # Without this, you get "trouble accessing your files right now" server_error.
-    #         print("Waiting 15 seconds for file to be processed by OpenAI...")
-    #         time.sleep(15)
-
-    #         fine_tuned_object = client.fine_tuning.jobs.create(
-    #             training_file=file_id, model=self.model
-    #         )
-    #     return fine_tuned_object
 
 
 # Initialize agents

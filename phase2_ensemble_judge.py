@@ -8,9 +8,9 @@ response, then applies the confidence gate from selective_gate.py to route
 items into ACCEPT / REJECT / UNCERTAIN buckets.
 
 Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python Actor_Critic_CGEV/get_ensemble_judgement.py \\
-    --model gpt-4.1-nano-2025-04-14 \\
-    --input_file Actor_Critic_CGEV/logs/solve_PubMedQA_gpt-4.1-nano-2025-04-14/sol/sol.jsonl
+  PYTHONPATH=. python phase2_ensemble_judge.py \\
+    --model gpt-3.5-turbo-0125 \\
+    --input_file logs/solve_PubMedQA_gpt-3.5-turbo-0125/sol/sol.jsonl
 """
 
 import os
@@ -22,7 +22,7 @@ from tqdm import tqdm
 
 from args import parse_args
 from libs.data_loader import load_jsonl_objects
-from Actor_Critic_CGEV.agent import Agent
+from agent import Agent
 from prompt_ensemble import (
     sys_verifier_A,
     sys_verifier_B,

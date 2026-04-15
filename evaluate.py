@@ -13,13 +13,13 @@ Reports:
 Usage (run from project root with PYTHONPATH=.):
 
   # Evaluate fine-tuned CGEV models:
-  PYTHONPATH=. python Actor_Critic_CGEV/evaluate_cgev.py \\
-    --ft_ids_file Actor_Critic_CGEV/logs/actor_critic/generate/gpt-4.1-nano-2025-04-14_gpt-4.1-nano-2025-04-14/finetuning_ids.jsonl \\
+  PYTHONPATH=. python evaluate.py \\
+    --ft_ids_file logs/actor_critic/generate/gpt-3.5-turbo-0125_gpt-3.5-turbo-0125/finetuning_ids.jsonl \\
     --input_file  dataset/PubMedQA_test.jsonl
 
   # Evaluate base model as baseline:
-  PYTHONPATH=. python Actor_Critic_CGEV/evaluate_cgev.py \\
-    --base_model gpt-4.1-nano-2025-04-14 \\
+  PYTHONPATH=. python evaluate.py \\
+    --base_model gpt-3.5-turbo-0125 \\
     --input_file dataset/PubMedQA_test.jsonl
 """
 
@@ -304,7 +304,7 @@ if __name__ == "__main__":
     total      = len(batched)
     print(f"Test questions : {total}")
 
-    log_dir = f"Actor_Critic_CGEV/logs/eval_cgev/{log_subdir}"
+    log_dir = f"logs/eval_cgev/{log_subdir}"
     os.makedirs(log_dir, exist_ok=True)
 
     # ── Run in parallel ───────────────────────────────────────────────────────

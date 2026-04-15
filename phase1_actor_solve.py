@@ -8,7 +8,7 @@ from args import parse_args
 from libs.data_loader import load_dataset, extract_answer_yesno
 from libs.utils import compare_answer_with_groundtruth
 from prompt import sys_single_sol_prompt, pubmed_prompt_0shot, format_prompt_yesno
-from Actor_Critic_CGEV.agent import actor_agent
+from agent import actor_agent
 
 DATA_BATCH_SIZE = 1
 
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         for i in range(0, len(input_data), DATA_BATCH_SIZE)
     ]
 
-    log_dir = f"Actor_Critic_CGEV/logs/solve_{args.subject}_{actor_agent.model}"
+    log_dir = f"logs/solve_{args.subject}_{actor_agent.model}"
     os.makedirs(log_dir, exist_ok=True)
     print(f"Output dir: {log_dir}")
     print(f"Total problems: {len(batched_data)}")

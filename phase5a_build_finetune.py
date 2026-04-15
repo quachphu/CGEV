@@ -19,14 +19,14 @@ Builds 5 supervised training files in OpenAI SFT format ({"messages": [...]}).
             (Critic's step-level feedback led to a successful regeneration)
 
 Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python Actor_Critic_CGEV/get_finetune_data_cgev.py \\
-    --model gpt-4.1-nano-2025-04-14 \\
+  PYTHONPATH=. python phase5a_build_finetune.py \\
+    --model gpt-3.5-turbo-0125 \\
     --library_file       .../ensemble_judgement-{model}/library.jsonl \\
     --correct_re_dir     .../stepwise_feedback-{model}/feedback/regenerate-{model}/correct_re \\
     --all_judgement_dir  .../ensemble_judgement-{model}/ALL \\
     --feedback_dir       .../stepwise_feedback-{model}/feedback
 
-Output: Actor_Critic_CGEV/logs/actor_critic/generate/{model}_{model}/
+Output: logs/actor_critic/generate/{model}_{model}/
 """
 
 import copy
@@ -214,7 +214,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    output_dir = f"Actor_Critic_CGEV/logs/actor_critic/generate/{args.model}_{args.model}"
+    output_dir = f"logs/actor_critic/generate/{args.model}_{args.model}"
     build_finetune_data_cgev(
         library_file=args.library_file,
         correct_re_dir=args.correct_re_dir,

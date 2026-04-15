@@ -10,7 +10,7 @@ Changes vs original:
   - Polls file status before submitting job (avoids OpenAI server_error race condition)
 
 Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python Actor_Critic_CGEV/fine_tune_critic.py --model gpt-4.1-nano-2025-04-14
+  PYTHONPATH=. python phase5b_submit_finetune.py --model gpt-3.5-turbo-0125
 """
 
 import os
@@ -19,8 +19,8 @@ import time
 import datetime
 from openai import OpenAI
 import openai
-from Actor_Critic_CGEV.agent import Agent
-from Actor_Critic_CGEV.args import parse_args
+from agent import Agent
+from args import parse_args
 
 client = OpenAI()
 
@@ -66,7 +66,7 @@ def _wait_for_slot(model_name: str):
 def fine_tune(data_model_name: str):
     job_ids   = {}
     dict_path = (
-        f"Actor_Critic_CGEV/logs/actor_critic/generate/{data_model_name}_{data_model_name}"
+        f"logs/actor_critic/generate/{data_model_name}_{data_model_name}"
     )
     os.makedirs(dict_path, exist_ok=True)
     id_file_path = f"{dict_path}/finetuning_ids.jsonl"
