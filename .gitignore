@@ -1,0 +1,24 @@
+# API keys — NEVER commit
+.env
+*.env
+
+# Generated experiment logs (too large for git, store separately)
+logs/
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS
+.DS_Store
+
+# Python virtual environments
+.venv/
+venv/
+
+# IDE
+.vscode/
+.cursor/
+
+# Large files
+*.pdf
+*.txt.bak
