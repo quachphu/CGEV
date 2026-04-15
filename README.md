@@ -45,16 +45,20 @@ CGEV introduces three key innovations over SiriuS:
 ## Setup
 
 ```bash
+# 1. Create and activate the conda environment
 conda env create -f environment.yml
 conda activate sirius
+
+# 2. Set your OpenAI API key
 cp .env.example .env
-# Edit .env and paste your OpenAI API key
+# Open .env and replace sk-... with your real OpenAI API key
 ```
 
 ## Running the Full Pipeline
 
 ```bash
-export OPENAI_API_KEY=sk-...
+# Load your API key from .env
+export OPENAI_API_KEY=<paste-your-openai-key-here>
 export MODEL=gpt-3.5-turbo-0125
 
 # Set path variables
