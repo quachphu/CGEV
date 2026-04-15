@@ -36,7 +36,7 @@ import argparse
 from pathlib import Path
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# Helpers
 
 def load_jsonl(path: str) -> list:
     items = []
@@ -61,7 +61,7 @@ def _iter_per_item_jsonl(directory: str):
         yield from load_jsonl(str(jsonl_file))
 
 
-# ── Main builder ──────────────────────────────────────────────────────────────
+# Main builder
 
 CONTAMINATION_PHRASES = (
     "upon reviewing the feedback",
@@ -92,13 +92,13 @@ def build_finetune_data_cgev(
 
     os.makedirs(output_dir, exist_ok=True)
 
-    # ── Step 1: build correct_re index (used by actor pool B and critic) ──────
+    # Step 1: build correct_re index (used by actor pool B and critic)
     correct_re_indices = set()
     for item in _iter_per_item_jsonl(correct_re_dir):
         correct_re_indices.add(item["index"])
     print(f"  correct_re indices collected: {len(correct_re_indices)}")
 
-    # ── File 1: finetune_actor.jsonl ──────────────────────────────────────────
+    # File 1: finetune_actor.jsonl
     actor_path  = os.path.join(output_dir, "finetune_actor.jsonl")
     actor_count = 0
 
@@ -120,7 +120,7 @@ def build_finetune_data_cgev(
 
     print(f"[actor]      {actor_count} training examples → {actor_path}")
 
-    # ── Files 2-4: finetune_verifier_{a,b,c}.jsonl ───────────────────────────
+    # Files 2-4: finetune_verifier_{a,b,c}.jsonl
     verifier_configs = [
         ("a", "A_evidence",   "verifier_A_log"),
         ("b", "B_logic",      "verifier_B_log"),
@@ -162,7 +162,7 @@ def build_finetune_data_cgev(
 
         print(f"[verifier_{name}] {verifier_count} training examples → {verifier_path}")
 
-    # ── File 5: finetune_critic.jsonl ─────────────────────────────────────────
+    # File 5: finetune_critic.jsonl
     critic_path  = os.path.join(output_dir, "finetune_critic.jsonl")
     critic_count = 0
 

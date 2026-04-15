@@ -1,7 +1,7 @@
 format_prompt_number = '''Always conclude the last line of your response should be of the following format: 'Answer: $VALUE' (without quotes) where VALUE is a numerical value.'''
 format_prompt_letter = '''Always conclude the last line of your response should be of the following format: 'Answer: $VALUE' (without quotes) where VALUE is one of ABCD.'''
 format_prompt_yesno='''Always conclude the last line of your response should be of the following format: 'Answer: $VALUE' (without quotes) where VALUE is either 'yes' or 'no' or 'maybe'.'''
-# ---single-agent---
+# single-agent
 sys_single_sol_prompt ='''You are a scientist.'''
 std_prompt_0shot = '''You are supposed to provide a solution to a given problem. 
 Here is the given problem:
@@ -15,7 +15,7 @@ Here is the given context:
 Problem:
 "{question}"
 Please provide yes, no or maybe to the given problem. {format_prompt}'''
-# -----------------------------rephrase--------------------------------
+# rephrase
 rephrase_sys_prompt = """Rephrase the following solution process to ensure that it appears as though the solution was arrived at directly, with no traces of mistakes or corrections. Retain all key steps and avoid generating any new content. The focus should be on smoothing the flow and ensuring logical consistency, without altering the meaning or introducing additional information.
 
 """
@@ -30,8 +30,8 @@ Please output the rephrased solution process'''
 
 
 
-# --------------------------------------------Pubmed-------------------------------
-# ---multi-agent---
+# Pubmed
+# multi-agent
 sys_sol_prompt_pubmed = '''You are part of a team of experts working collaboratively to solve science-related yes/no questions using contextual evidence. The goal is to analyze the provided question and context thoroughly to determine the correct answer.  
 
 The team is composed of two roles:  
@@ -64,7 +64,7 @@ Here is the summary from the Context Analyst:
 Please analyze the question, using the summary to answer the problem. {format_prompt}'''
 
 
-# -------------------------critic multi-agent feedback-------------------------
+# critic multi-agent feedback
 critic_sys_promt_all_pubmed ='''Below is a biomedical yes/no question, the context, and a collaborative solution involving a Context Analyst and a Problem Solver.  
 As a critical and creative scientist, your task is to critically evaluate the reasoning step-by-step. Identify any errors or weaknesses in the logic or evidence interpretation, and point them out.  
 Finally, provide the errors and improvements as feedback to the specific agent responsible for that part of the content.  
@@ -91,7 +91,7 @@ Correct answer: `{correct_answer}`
 
 '''
 
-# -------------------------critic single-agent feedback-------------------------
+# critic single-agent feedback
 critic_sys_prompt_single_pubmed='''Below is a biomedical yes/no question, the context, a solution and the correct answer.
 As a critical and creative scientist, your task is to critically evaluate the reasoning step-by-step. Identify any errors, and point them out. 
 Finally, provide the errors and improvements as feedback.'''
@@ -106,7 +106,7 @@ Correct answer: `{correct_answer}`
 '''
 
 
-# ------------------------single-agent regenerate_response-------------------------
+# single-agent regenerate_response
 sys_single_regenerate_prompt ='''You are a scientist.'''
 user_single_regenerate_prompt = '''You are supposed to provide a solution to a given problem. 
 Here is the given context: "{context}"
@@ -125,7 +125,7 @@ Please provide a final answer to the given problem. {format_prompt}'''
 
 
 
-# -------------------------regenerate_response-------------------------
+# regenerate_response
 sys_regenerate_prompt_pubmed = '''You are part of a team of experts collaborating to solve a biomedical yes/no question based on contextual evidence.
 
 The team is composed of two experts:

@@ -1,4 +1,4 @@
-# ── Verifier System Prompts ───────────────────────────────────────────────────
+# Verifier System Prompts
 # Each verifier targets a distinct failure mode of the Actor.
 # All share the same user prompt; only the system prompt differs.
 # NO ground truth is passed — same blind constraint as original SiriuS.
@@ -41,7 +41,7 @@ Briefly evaluate according to your assigned role.
 Your Decision must be either "True" or "False"."""
 
 
-# ── Step-Level Critic Prompts ─────────────────────────────────────────────────
+# Step-Level Critic Prompts
 # Used in Phase 3 (get_stepwise_feedback.py).
 # Replaces the holistic SiriuS critic with step-by-step attribution.
 # NO ground truth passed.

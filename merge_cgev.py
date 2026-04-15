@@ -50,7 +50,7 @@ def merge_cgev(base_dir: str):
                 "Run get_ensemble_judgement.py first."
             )
 
-    # ── Merge A: ACCEPT + UNCERTAIN → library.jsonl ───────────────────────────
+    # Merge A: ACCEPT + UNCERTAIN → library.jsonl
     library_items  = load_jsonl_files_from_dir(accept_dir)
     n_accept = len(library_items)
 
@@ -70,7 +70,7 @@ def merge_cgev(base_dir: str):
     print(f"[DONE] library.jsonl: {len(library_items)} items "
           f"(ACCEPT={n_accept}, UNCERTAIN={n_uncertain}) → {library_path}")
 
-    # ── Merge B: REJECT → reject.jsonl ───────────────────────────────────────
+    # Merge B: REJECT → reject.jsonl
     reject_items = load_jsonl_files_from_dir(reject_dir)
     reject_path  = base / "reject.jsonl"
     with reject_path.open("w", encoding="utf-8") as f:

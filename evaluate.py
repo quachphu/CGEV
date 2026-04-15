@@ -59,7 +59,7 @@ DATA_BATCH_SIZE = 1
 client = OpenAI()
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# Helpers
 
 def call_llm(model: str, sys_prompt: str, user_prompt: str) -> str | None:
     """Single LLM call with retry, returns assistant text or None."""
@@ -88,7 +88,7 @@ def extract_response(text: str):
     return extract_answer_yesno(text[-15:]) if text else None
 
 
-# ── Per-question evaluation ───────────────────────────────────────────────────
+#Per-question evaluation
 
 def evaluate_one(item, actor_model, verifier_a_model, verifier_b_model, verifier_c_model,
                  critic_model, log_dir, results):
@@ -99,7 +99,7 @@ def evaluate_one(item, actor_model, verifier_a_model, verifier_b_model, verifier
     if isinstance(groundtruth, str):
         groundtruth = [groundtruth]
 
-    # ── Phase 1: Actor initial solve ─────────────────────────────────────────
+    # Phase 1: Actor initial solve
     actor_user = pubmed_prompt_0shot.format(
         context=context, question=question, format_prompt=format_prompt_yesno
     )
@@ -110,7 +110,7 @@ def evaluate_one(item, actor_model, verifier_a_model, verifier_b_model, verifier
     actor_answer  = extract_response(actor_text)
     actor_correct = compare_answer_with_groundtruth(actor_answer or "", *groundtruth)
 
-    # ── Phase 2: Ensemble judgement (3 verifiers) ─────────────────────────────
+    # Phase 2: Ensemble judgement (3 verifiers)
     verifier_user = user_verifier_prompt.format(
         context=context, question=question, original_response=actor_text
     )
@@ -126,7 +126,7 @@ def evaluate_one(item, actor_model, verifier_a_model, verifier_b_model, verifier
     gate_decision = apply_gate(votes)
     label         = compute_label(actor_correct, gate_decision)
 
-    # ── Phase 3+4: Critic + Regenerate (only when gate says REJECT) ──────────
+    # Phase 3+4: Critic + Regenerate (only when gate says REJECT)
     final_correct = actor_correct  # default: preserve Actor's answer
 
     if gate_decision == "REJECT":
@@ -176,7 +176,7 @@ def evaluate_one(item, actor_model, verifier_a_model, verifier_b_model, verifier
     return result
 
 
-# ── Worker (multiprocessing) ──────────────────────────────────────────────────
+# Worker (multiprocessing)
 
 def worker(batched_input_data, rank, actor_model, verifier_a_model, verifier_b_model,
            verifier_c_model, critic_model, log_dir, shared_results):
@@ -190,7 +190,7 @@ def worker(batched_input_data, rank, actor_model, verifier_a_model, verifier_b_m
               f"final={res['final_correct']}")
 
 
-# ── Metrics ───────────────────────────────────────────────────────────────────
+# Metrics
 
 def compute_metrics(results: list, total: int) -> dict:
     counts = {k: 0 for k in ("PT", "PF", "NT", "NF", "UT", "UF")}
@@ -238,7 +238,7 @@ def print_table(label: str, metrics: dict):
     print("=" * 65 + "\n")
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# Main
 
 def load_ft_models(ft_ids_file: str) -> dict:
     models = {}
@@ -271,7 +271,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_processes", type=int, default=16)
     args = parser.parse_args()
 
-    # ── Resolve models ────────────────────────────────────────────────────────
+    # Resolve models
     if args.ft_ids_file:
         ft_models       = load_ft_models(args.ft_ids_file)
         actor_model     = ft_models.get("actor")
@@ -292,7 +292,7 @@ if __name__ == "__main__":
     print(f"Verifier C model : {verifier_c_model}")
     print(f"Critic     model : {critic_model}")
 
-    # ── Load test data ────────────────────────────────────────────────────────
+    # Load test data
     load_args = types.SimpleNamespace(
         input_file=args.input_file,
         subject="PubMedQA",
@@ -307,7 +307,7 @@ if __name__ == "__main__":
     log_dir = f"logs/eval_cgev/{log_subdir}"
     os.makedirs(log_dir, exist_ok=True)
 
-    # ── Run in parallel ───────────────────────────────────────────────────────
+    # Run in parallel
     manager        = multiprocessing.Manager()
     shared_results = manager.dict()
     n_proc         = min(args.num_processes, total)
@@ -331,7 +331,7 @@ if __name__ == "__main__":
 
     elapsed = round((datetime.datetime.now() - start).total_seconds() / 60, 2)
 
-    # ── Compute and display metrics ───────────────────────────────────────────
+    # Compute and display metrics
     results_list = list(shared_results.values())
     metrics      = compute_metrics(results_list, total)
     print_table(run_label, metrics)
