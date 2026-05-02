@@ -7,36 +7,38 @@ achieving **70.0% Overall Accuracy** on PubMedQA versus SiriuS's 50.6% (+19.4 pp
 ## Architecture Overview
 
 CGEV introduces three key innovations over SiriuS:
+
 1. **Ensemble Judgment** — 3 specialized Verifiers (Evidence, Logic, Conclusion) replace the single Judgment Agent
 2. **Confidence Gate** — a probabilistic routing mechanism with 3 paths: ACCEPT / REJECT / UNCERTAIN
 3. **Step-Level Critic** — fine-grained step attribution replaces the holistic Janusian feedback prompt
 
 ## Pipeline
 
-| Phase | Script | Description |
-|---|---|---|
-| 1 | `phase1_actor_solve.py` | Actor generates initial solutions on PubMedQA training set |
-| 2 | `phase2_ensemble_judge.py` | 3 Verifiers evaluate each response; Confidence Gate routes to ACCEPT/REJECT/UNCERTAIN |
-| 2.5 | `merge_cgev.py` | ACCEPT + UNCERTAIN → library.jsonl (bypass Critic); REJECT → reject.jsonl |
-| 3 | `phase3_stepwise_feedback.py` | Step-Level Critic generates per-step feedback on REJECT items only |
-| 4 | `phase4_actor_regenerate.py` | Actor regenerates answers using step-level feedback |
-| 5A | `phase5a_build_finetune.py` | Builds 5 SFT training files (actor, verifier_a/b/c, critic) |
-| 5B | `phase5b_submit_finetune.py` | Submits fine-tuning jobs to OpenAI one at a time |
-| Eval | `evaluate.py` | End-to-end evaluation on PubMedQA test set |
+| Phase | Script                        | Description                                                                           |
+| ----- | ----------------------------- | ------------------------------------------------------------------------------------- |
+| 1     | `phase1_actor_solve.py`       | Actor generates initial solutions on PubMedQA training set                            |
+| 2     | `phase2_ensemble_judge.py`    | 3 Verifiers evaluate each response; Confidence Gate routes to ACCEPT/REJECT/UNCERTAIN |
+| 2.5   | `merge_cgev.py`               | ACCEPT + UNCERTAIN → library.jsonl (bypass Critic); REJECT → reject.jsonl             |
+| 3     | `phase3_stepwise_feedback.py` | Step-Level Critic generates per-step feedback on REJECT items only                    |
+| 4     | `phase4_actor_regenerate.py`  | Actor regenerates answers using step-level feedback                                   |
+| 5A    | `phase5a_build_finetune.py`   | Builds 5 SFT training files (actor, verifier_a/b/c, critic)                           |
+| 5B    | `phase5b_submit_finetune.py`  | Submits fine-tuning jobs to OpenAI one at a time                                      |
+| Eval  | `evaluate.py`                 | End-to-end evaluation on PubMedQA test set                                            |
 
 ## Results (PubMedQA, GPT-3.5-Turbo, 500 test questions)
 
-| Method | TP Accuracy | Overall Accuracy | PF Rate ↓ | UT Rescue Rate |
-|---|---|---|---|---|
-| Self-Correct† | 11.80% | 16.40% | N/A | N/A |
-| Prompt† | 18.40% | 47.60% | N/A | N/A |
-| SiriuS† | 35.00% | 50.60% | N/A | N/A |
-| CGEV base (Ours) | 47.60% | 53.80% | 0.83% | 37.74% |
-| **CGEV fine-tuned (Ours)** | **31.80%** | **70.00%** | 22.06% | **86.15%** |
+| Method                     | TP Accuracy | Overall Accuracy | PF Rate ↓ | UT Rescue Rate |
+| -------------------------- | ----------- | ---------------- | --------- | -------------- |
+| Self-Correct†              | 11.80%      | 16.40%           | N/A       | N/A            |
+| Prompt†                    | 18.40%      | 47.60%           | N/A       | N/A            |
+| SiriuS†                    | 35.00%      | 50.60%           | N/A       | N/A            |
+| CGEV base (Ours)           | 47.60%      | 53.80%           | 0.83%     | 37.74%         |
+| **CGEV fine-tuned (Ours)** | **31.80%**  | **70.00%**       | 22.06%    | **86.15%**     |
 
 † Results from Zhao et al. (2025) Table 5
 
 **Metrics:**
+
 - **TP Accuracy** = PT / total — fraction correctly answered AND accepted by the gate
 - **Overall Accuracy** = final_correct / total — after all regenerations
 - **PF Rate** = PF / (PT+PF) — false rejection rate (lower is better)
@@ -142,11 +144,19 @@ CGEV/
 ## Citation
 
 This work extends:
+
 ```
 @article{zhao2025sirius,
   title={SiriuS: Self-improving Multi-agent Systems via Bootstrapped Reasoning},
   author={Zhao, Wanjia and Yuksekgonul, Mert and Wu, Shirley and Zou, James},
   journal={arXiv preprint arXiv:2502.04780},
   year={2025}
+}
+@inproceedings{jin2019pubmedqa,
+  title={PubMedQA: A Dataset for Biomedical Research Question Answering},
+  author={Jin, Qiao and Dhingra, Bhuwan and Liu, Zhengping and Cohen, William and Lu, Xinghua},
+  booktitle={Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)},
+  pages={2567--2577},
+  year={2019}
 }
 ```
