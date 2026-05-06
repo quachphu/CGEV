@@ -1,8 +1,3 @@
-# Verifier System Prompts
-# Each verifier targets a distinct failure mode of the Actor.
-# All share the same user prompt; only the system prompt differs.
-# NO ground truth is passed — same blind constraint as original SiriuS.
-
 sys_verifier_A = """You are an Evidence Verifier. Check only factual accuracy.
 Is the answer's factual claim supported by the context?
 Do not evaluate reasoning flow or conclusion format.

@@ -1,21 +1,3 @@
-#!/usr/bin/env python3
-"""
-Merge per-item JSONL files in a directory into a single JSONL file.
-
-Usage examples (run from project root with PYTHONPATH=.):
-
-  # After phase1 — merge sol files for ensemble judgement input:
-  python merge.py --dir logs/solve_PubMedQA_gpt-3.5-turbo-0125/sol
-
-  # After phase3 — merge feedback files for regenerate input:
-  python merge.py --dir logs/solve_PubMedQA_gpt-3.5-turbo-0125/sol/ensemble_judgement-gpt-3.5-turbo-0125/stepwise_feedback-gpt-3.5-turbo-0125/feedback
-
-Output: <dir>/<dirname>.jsonl  (filename matches what the next script's path replace() expects)
-  sol/       -> sol/sol.jsonl
-  False/     -> False/False.jsonl
-  feedback/  -> feedback/feedback.jsonl
-"""
-
 import argparse
 from pathlib import Path
 

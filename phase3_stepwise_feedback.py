@@ -1,23 +1,3 @@
-"""
-Phase 3 — Step-Level Feedback (CGEV).
-
-Replaces get_critic_feedback.py from original SiriuS.
-
-Key difference: uses step-level critic prompt instead of holistic Janusian prompt.
-The step-level prompt attributes errors to specific reasoning steps, giving the
-Actor actionable fix instructions instead of vague "consider alternative answers".
-
-Input: reject.jsonl (REJECT items only — items where ≥2/3 verifiers agreed answer is wrong)
-Output: stepwise_feedback-{model}/feedback/{PMID}_feedback.jsonl
-
-NO ground truth is passed to the critic — same blind-feedback constraint as SiriuS.
-
-Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python phase3_stepwise_feedback.py \\
-    --model gpt-3.5-turbo-0125 \\
-    --input_file logs/.../ensemble_judgement-{model}/reject.jsonl
-"""
-
 import os
 import json
 import datetime

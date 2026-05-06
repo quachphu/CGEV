@@ -1,18 +1,3 @@
-"""
-Phase 5B — Fine-Tuning (CGEV — 5 agents).
-
-Extended from original SiriuS fine_tune_critic.py.
-
-Changes vs original:
-  - 5 agents: actor, verifier_a, verifier_b, verifier_c, critic  (was 3: feedback, judge, actor)
-  - Minimum examples guard: skips agents with fewer than 10 training examples
-  - data_model vs ft_model split (explicit separation for clarity)
-  - Polls file status before submitting job (avoids OpenAI server_error race condition)
-
-Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python phase5b_submit_finetune.py --model gpt-3.5-turbo-0125
-"""
-
 import os
 import json
 import time

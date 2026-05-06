@@ -1,34 +1,3 @@
-"""
-Phase 5A — Build Fine-Tuning Data for CGEV (5 agents).
-
-Builds 5 supervised training files in OpenAI SFT format ({"messages": [...]}).
-
-  finetune_actor.jsonl
-    Pool A: library.jsonl items where score=True and gate_decision='ACCEPT'
-            → direct correct solves, clean signal
-    Pool B: correct_re/ items where Actor self-corrected via step-level feedback
-            → contamination filter applied
-
-  finetune_verifier_a.jsonl  (and _b, _c — same logic, different logs)
-    Source: ALL/ items where label is NOT 'UT' or 'UF' (skip UNCERTAIN — noisy signal)
-    Positive examples: verifier voted correctly → keep log as-is
-    Negative examples: verifier voted wrong    → flip assistant content to correct verdict
-
-  finetune_critic.jsonl
-    Source: feedback/ items whose index appears in correct_re/
-            (Critic's step-level feedback led to a successful regeneration)
-
-Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python phase5a_build_finetune.py \\
-    --model gpt-3.5-turbo-0125 \\
-    --library_file       .../ensemble_judgement-{model}/library.jsonl \\
-    --correct_re_dir     .../stepwise_feedback-{model}/feedback/regenerate-{model}/correct_re \\
-    --all_judgement_dir  .../ensemble_judgement-{model}/ALL \\
-    --feedback_dir       .../stepwise_feedback-{model}/feedback
-
-Output: logs/actor_critic/generate/{model}_{model}/
-"""
-
 import copy
 import json
 import os

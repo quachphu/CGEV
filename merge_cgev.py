@@ -1,23 +1,3 @@
-"""
-Phase 2.5 — CGEV Merge.
-
-Performs two targeted merge operations after get_ensemble_judgement.py:
-
-  Merge A (library items):  ACCEPT/ + UNCERTAIN/ → library.jsonl
-  Merge B (feedback items): REJECT/              → reject.jsonl
-
-library.jsonl  — items that bypass the Critic entirely (core anti-corruption mechanism)
-reject.jsonl   — items routed to step-level Critic in Phase 3
-
-Critical difference from original SiriuS:
-  SiriuS: ALL False-judged items → Critic (includes PF = wrongly rejected correct answers)
-  CGEV:   Only REJECT items      → Critic (ACCEPT + UNCERTAIN preserved, never corrupted)
-
-Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python merge_cgev.py \\
-    --base_dir logs/solve_PubMedQA_{model}/sol/ensemble_judgement-{model}
-"""
-
 import argparse
 import json
 from pathlib import Path

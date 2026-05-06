@@ -1,18 +1,3 @@
-"""
-Phase 2 — Ensemble Judgement (CGEV).
-
-Replaces get_critic_judegement.py from original SiriuS.
-
-Runs 3 specialized verifiers (Evidence / Logic / Conclusion) on each Actor
-response, then applies the confidence gate from selective_gate.py to route
-items into ACCEPT / REJECT / UNCERTAIN buckets.
-
-Usage (run from project root with PYTHONPATH=.):
-  PYTHONPATH=. python phase2_ensemble_judge.py \\
-    --model gpt-3.5-turbo-0125 \\
-    --input_file logs/solve_PubMedQA_gpt-3.5-turbo-0125/sol/sol.jsonl
-"""
-
 import os
 import re
 import json

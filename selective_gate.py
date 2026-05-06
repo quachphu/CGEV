@@ -1,20 +1,3 @@
-"""
-CGEV Confidence Gate — routes Actor answers to ACCEPT / REJECT / UNCERTAIN.
-
-Thresholds (fraction of "False" votes out of 3 verifiers):
-  p_wrong < 0.34  → ACCEPT    (0 or 1 False vote: 0/3=0.00, 1/3=0.33)
-  p_wrong ≥ 0.67  → REJECT    (2 or 3 False votes: 2/3=0.67, 3/3=1.00)
-  else            → UNCERTAIN  (exactly the split case: 1/3 when threshold is strict)
-
-6-label system (extends SiriuS PT/PF/NT/NF with UT/UF):
-  PT — ACCEPT + score True   True Positive: verifiers correctly passed correct answer
-  PF — REJECT + score True   False Rejection: verifiers wrongly rejected correct answer (minimized by CGEV)
-  NT — REJECT + score False  True Negative: verifiers correctly rejected wrong answer
-  NF — ACCEPT + score False  False Acceptance: verifiers missed an error
-  UT — UNCERTAIN + score True  Rescued: correct answer preserved instead of sent to Critic
-  UF — UNCERTAIN + score False Preserved: wrong answer bypassed Critic (cost of UNCERTAIN)
-"""
-
 HIGH_THRESHOLD = 0.34   # p_wrong < HIGH  → ACCEPT
 LOW_THRESHOLD  = 0.67   # p_wrong ≥ LOW   → REJECT
 
