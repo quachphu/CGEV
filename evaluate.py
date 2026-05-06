@@ -1,28 +1,3 @@
-"""
-CGEV Evaluation Script — reproduces Table 5 metrics with CGEV extensions.
-
-Runs the full CGEV pipeline on PubMedQA_test.jsonl:
-  Actor → Ensemble (3 verifiers + gate) → (Critic + Regenerate if REJECT)
-
-Reports:
-  TP Accuracy     = PT / total × 100   (same definition as SiriuS Table 5)
-  Overall Accuracy = final_correct / total × 100
-  PF Rate         = PF / (PT+PF) × 100  (false rejection rate — CGEV minimizes)
-  UT Rescue Rate  = UT / (UT+UF) × 100  (CGEV-specific: uncertain items that were correct)
-
-Usage (run from project root with PYTHONPATH=.):
-
-  # Evaluate fine-tuned CGEV models:
-  PYTHONPATH=. python evaluate.py \\
-    --ft_ids_file logs/actor_critic/generate/gpt-3.5-turbo-0125_gpt-3.5-turbo-0125/finetuning_ids.jsonl \\
-    --input_file  dataset/PubMedQA_test.jsonl
-
-  # Evaluate base model as baseline:
-  PYTHONPATH=. python evaluate.py \\
-    --base_model gpt-3.5-turbo-0125 \\
-    --input_file dataset/PubMedQA_test.jsonl
-"""
-
 import os
 import re
 import json
